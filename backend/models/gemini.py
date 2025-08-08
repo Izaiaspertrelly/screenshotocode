@@ -74,9 +74,33 @@ async def stream_gemini_response(
     )
 
     for chunk in response:
-        if chunk.text:
-            full_response += chunk.text
-            await callback(chunk.text)
+        # Check if chunk has valid parts and text content
+        if hasattr(chunk, 'parts') and chunk.parts:
+            for part in chunk.parts:
+                if hasattr(part, 'text') and part.text:
+                    full_response += part.text
+                    await callback(part.text)
+        # Fallback: try to access text directly if parts are not available
+        elif hasattr(chunk, 'text'):
+            try:
+                if chunk.text:
+                    full_response += chunk.text
+                    await callback(chunk.text)
+            except ValueError as e:
+                # Handle cases where text accessor fails (e.g., blocked content)
+                print(f"Gemini chunk text access failed: {e}")
+                # Check if there's a finish_reason indicating why it failed
+                if hasattr(chunk, 'candidates') and chunk.candidates:
+                    for candidate in chunk.candidates:
+                        if hasattr(candidate, 'finish_reason'):
+                            print(f"Finish reason: {candidate.finish_reason}")
+                            if candidate.finish_reason == 2:  # SAFETY
+                                raise Exception("Content was blocked by Gemini safety filters")
+                            elif candidate.finish_reason == 3:  # RECITATION
+                                raise Exception("Content was blocked due to recitation concerns")
+                            elif candidate.finish_reason == 4:  # OTHER
+                                raise Exception("Content was blocked for other reasons")
+                continue
 
     completion_time = time.time() - start_time
     return {"duration": completion_time, "code": full_response}
