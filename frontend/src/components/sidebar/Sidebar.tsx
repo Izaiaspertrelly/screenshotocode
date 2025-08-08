@@ -128,7 +128,7 @@ function Sidebar({
               onClick={cancelCodeGeneration}
               className="w-full dark:text-white dark:bg-gray-700"
             >
-              Cancel All Generations
+              Cancelar Todas as Gerações
             </Button>
           </div>
         </div>
@@ -184,7 +184,7 @@ function Sidebar({
               />
               <Textarea
                 ref={textareaRef}
-                placeholder="Tell the AI what to change..."
+                placeholder="Diga à IA o que mudar..."
                 onChange={(e) => setUpdateInstruction(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
@@ -198,7 +198,7 @@ function Sidebar({
                   onClick={() => doUpdate(updateInstruction)}
                   className="dark:text-white dark:bg-gray-700 update-btn flex-1"
                 >
-                  Update <KeyboardShortcutBadge letter="enter" />
+                  Atualizar <KeyboardShortcutBadge letter="enter" />
                 </Button>
                 <UpdateImageUpload 
                   updateImages={updateImages} 
@@ -209,7 +209,7 @@ function Sidebar({
               {/* Drag overlay that covers the entire update area */}
               {isDragging && (
                 <div className="absolute inset-0 bg-blue-50/90 dark:bg-gray-800/90 border-2 border-dashed border-blue-400 dark:border-blue-600 rounded-md flex items-center justify-center pointer-events-none z-10">
-                  <p className="text-blue-600 dark:text-blue-400 font-medium">Drop images here</p>
+                  <p className="text-blue-600 dark:text-blue-400 font-medium">Solte imagens aqui</p>
                 </div>
               )}
             </div>
@@ -218,7 +218,7 @@ function Sidebar({
                 onClick={regenerate}
                 className="flex items-center gap-x-2 dark:text-white dark:bg-gray-700 regenerate-btn"
               >
-                🔄 Regenerate
+                🔄 Regenerar
               </Button>
               {showSelectAndEditFeature && <SelectAndEditModeToggleButton />}
             </div>
@@ -255,7 +255,7 @@ function Sidebar({
               )}
             </div>
             <div className="text-gray-400 uppercase text-sm text-center mt-1">
-              {inputMode === "video" ? "Original Video" : "Original Screenshot"}
+              {inputMode === "video" ? "Vídeo Original" : "Captura de Tela Original"}
             </div>
           </div>
         )}

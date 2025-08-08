@@ -98,23 +98,23 @@ function ScreenRecorder({
   return (
     <div className="flex items-center justify-center my-3">
       {screenRecorderState === ScreenRecorderState.INITIAL && (
-        <Button onClick={startScreenRecording}>Record Screen</Button>
+        <Button onClick={startScreenRecording}>Gravar Tela</Button>
       )}
 
       {screenRecorderState === ScreenRecorderState.RECORDING && (
         <div className="flex items-center flex-col gap-y-4">
           <div className="flex items-center mr-2 text-xl gap-x-1">
             <span className="block h-10 w-10 bg-red-600 rounded-full mr-1 animate-pulse"></span>
-            <span>Recording...</span>
+            <span>Gravando...</span>
           </div>
-          <Button onClick={stopScreenRecording}>Finish Recording</Button>
+          <Button onClick={stopScreenRecording}>Finalizar Gravação</Button>
         </div>
       )}
 
       {screenRecorderState === ScreenRecorderState.FINISHED && (
         <div className="flex items-center flex-col gap-y-4">
           <div className="flex items-center mr-2 text-xl gap-x-1">
-            <span>Screen Recording Captured.</span>
+            <span>Gravação de Tela Capturada.</span>
           </div>
           {screenRecordingDataUrl && (
             <video
@@ -132,9 +132,9 @@ function ScreenRecorder({
                 setScreenRecorderState(ScreenRecorderState.INITIAL)
               }
             >
-              Re-record
+              Gravar Novamente
             </Button>
-            <Button onClick={kickoffGeneration}>Generate</Button>
+            <Button onClick={kickoffGeneration}>Gerar</Button>
           </div>
         </div>
       )}

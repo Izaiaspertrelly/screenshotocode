@@ -2,8 +2,7 @@ import base64
 import time
 from typing import Awaitable, Callable, Dict, List
 from openai.types.chat import ChatCompletionMessageParam
-from google import genai
-from google.genai import types
+import google.generativeai as genai
 from llm import Completion, Llm
 
 
@@ -47,48 +46,37 @@ async def stream_gemini_response(
     # Get image data from messages
     image_data = extract_image_from_messages(messages)
 
-    client = genai.Client(api_key=api_key)
+    # Configure the API key
+    genai.configure(api_key=api_key)
+    
+    # Create the model
+    model = genai.GenerativeModel(model_name)
+    
     full_response = ""
 
-    if model_name == Llm.GEMINI_2_5_FLASH_PREVIEW_05_20.value:
-        # Gemini 2.5 Flash supports thinking budgets
-        config = types.GenerateContentConfig(
-            temperature=0,
-            max_output_tokens=20000,
-            thinking_config=types.ThinkingConfig(
-                thinking_budget=5000, include_thoughts=True
-            ),
-        )
-    else:
-        # TODO: Fix output tokens here
-        config = types.GenerateContentConfig(
+    # Prepare the content with text and image
+    content = [
+        messages[0]["content"],  # type: ignore
+        {
+            "mime_type": image_data["mime_type"],
+            "data": base64.b64decode(image_data["data"])
+        }
+    ]
+
+    # Generate content with streaming
+    response = model.generate_content(
+        content,
+        generation_config=genai.types.GenerationConfig(
             temperature=0,
             max_output_tokens=8000,
-        )
+        ),
+        stream=True
+    )
 
-    async for chunk in await client.aio.models.generate_content_stream(
-        model=model_name,
-        contents={
-            "parts": [
-                {"text": messages[0]["content"]},  # type: ignore
-                types.Part.from_bytes(
-                    data=base64.b64decode(image_data["data"]),
-                    mime_type=image_data["mime_type"],
-                ),
-            ]
-        },
-        config=config,
-    ):
-        if chunk.candidates and len(chunk.candidates) > 0:
-            for part in chunk.candidates[0].content.parts:
-                if not part.text:
-                    continue
-                elif part.thought:
-                    print("Thought summary:")
-                    print(part.text)
-                else:
-                    full_response += part.text
-                    await callback(part.text)
+    for chunk in response:
+        if chunk.text:
+            full_response += chunk.text
+            await callback(chunk.text)
 
     completion_time = time.time() - start_time
     return {"duration": completion_time, "code": full_response}

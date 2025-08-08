@@ -27,6 +27,6 @@ export function createCommit(
     hash,
     isCommitted: false,
     dateCreated: new Date(),
-    selectedVariantIndex: 0,
+    selectedVariantIndex: 1,
   };
 }

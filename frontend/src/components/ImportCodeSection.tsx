@@ -39,14 +39,14 @@ function ImportCodeSection({ importFromCode }: Props) {
     <Dialog>
       <DialogTrigger asChild>
         <Button className="import-from-code-btn" variant="secondary">
-          Import from Code
+          Importar do Código
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Paste in your HTML code</DialogTitle>
+          <DialogTitle>Cole seu código HTML</DialogTitle>
           <DialogDescription>
-            Make sure that the code you're importing is valid HTML.
+            Certifique-se de que o código que você está importando é HTML válido.
           </DialogDescription>
         </DialogHeader>
 
@@ -65,7 +65,7 @@ function ImportCodeSection({ importFromCode }: Props) {
 
         <DialogFooter>
           <Button className="import-btn" type="submit" onClick={doImport}>
-            Import
+            Importar
           </Button>
         </DialogFooter>
       </DialogContent>

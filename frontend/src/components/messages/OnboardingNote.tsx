@@ -2,24 +2,24 @@ export function OnboardingNote() {
   return (
     <div className="flex flex-col space-y-4 bg-green-700 p-2 rounded text-stone-200 text-sm">
       <span>
-        To use Screenshot to Code,{" "}
+        Para usar o Code Image,{" "}
         <a
           className="inline underline hover:opacity-70"
           href="https://buy.stripe.com/8wM6sre70gBW1nqaEE"
           target="_blank"
         >
-          buy some credits (100 generations for $36)
+          compre alguns créditos (100 gerações por $36)
         </a>{" "}
-        or use your own OpenAI API key with GPT4 vision access.{" "}
+        ou use sua própria chave da API OpenAI com acesso ao GPT4 vision.{" "}
         <a
           href="https://github.com/abi/screenshot-to-code/blob/main/Troubleshooting.md"
           className="inline underline hover:opacity-70"
           target="_blank"
         >
-          Follow these instructions to get yourself a key.
+          Siga estas instruções para obter uma chave.
         </a>{" "}
-        and paste it in the Settings dialog (gear icon above). Your key is only
-        stored in your browser. Never stored on our servers.
+        e cole-a no diálogo de Configurações (ícone de engrenagem acima). Sua chave é apenas
+        armazenada em seu navegador. Nunca armazenada em nossos servidores.
       </span>
     </div>
   );

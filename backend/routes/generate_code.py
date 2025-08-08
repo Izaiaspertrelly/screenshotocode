@@ -55,6 +55,7 @@ MessageType = Literal[
     "variantComplete",
     "variantError",
     "variantCount",
+    "variantModels",
 ]
 from image_generation.core import generate_images
 from prompts import create_prompt
@@ -369,7 +370,7 @@ class ModelSelectionStage:
         else:
             # Gemini only works for create right now
             if generation_type == "create":
-                third_model = Llm.GEMINI_2_0_FLASH
+                third_model = Llm.GEMINI_2_5_PRO
             else:
                 third_model = claude_model
 
@@ -380,16 +381,16 @@ class ModelSelectionStage:
             and (gemini_api_key or input_mode == "text")
         ):
             models = [
-                Llm.GPT_4_1_2025_04_14,
+                Llm.GPT_5_2025_08_07,
                 claude_model,
                 third_model,
             ]
         elif openai_api_key and anthropic_api_key:
-            models = [claude_model, Llm.GPT_4_1_2025_04_14]
+            models = [claude_model, Llm.GPT_5_2025_08_07]
         elif anthropic_api_key:
             models = [claude_model, Llm.CLAUDE_3_5_SONNET_2024_06_20]
         elif openai_api_key:
-            models = [Llm.GPT_4_1_2025_04_14, Llm.GPT_4O_2024_11_20]
+            models = [Llm.GPT_5_2025_08_07, Llm.GPT_4O_2024_11_20]
         else:
             raise Exception("No OpenAI or Anthropic key")
 
@@ -827,6 +828,11 @@ class StatusBroadcastMiddleware(Middleware):
     ) -> None:
         # Tell frontend how many variants we're using
         await context.send_message("variantCount", str(NUM_VARIANTS), 0)
+
+        # Send model information if available
+        if context.variant_models:
+            model_names = [model.value for model in context.variant_models]
+            await context.send_message("variantModels", ",".join(model_names), 0)
 
         for i in range(NUM_VARIANTS):
             await context.send_message("status", "Generating code...", i)

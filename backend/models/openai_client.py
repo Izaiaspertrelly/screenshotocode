@@ -22,8 +22,8 @@ async def stream_openai_response(
         "timeout": 600,
     }
 
-    # O1 doesn't support streaming or temperature
-    if model_name not in ["o1-2024-12-17", "o4-mini-2025-04-16", "o3-2025-04-16"]:
+    # O1 and GPT-5 don't support streaming or temperature
+    if model_name not in ["o1-2024-12-17", "o4-mini-2025-04-16", "o3-2025-04-16", "gpt-5-2025-08-07"]:
         params["temperature"] = 0
         params["stream"] = True
 
@@ -51,8 +51,12 @@ async def stream_openai_response(
         params["stream"] = True
         params["reasoning_effort"] = "high"
 
-    # O1 doesn't support streaming
-    if model_name == "o1-2024-12-17":
+    # GPT-5 configuration
+    if model_name == "gpt-5-2025-08-07":
+        params["max_completion_tokens"] = 16384
+
+    # O1 and GPT-5 don't support streaming
+    if model_name in ["o1-2024-12-17", "gpt-5-2025-08-07"]:
         response = await client.chat.completions.create(**params)  # type: ignore
         full_response = response.choices[0].message.content  # type: ignore
     else:

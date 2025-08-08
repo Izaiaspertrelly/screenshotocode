@@ -2,6 +2,24 @@ import { useProjectStore } from "../../store/project-store";
 import Spinner from "../core/Spinner";
 import { useEffect } from "react";
 
+// Function to get mocked model names based on variant index
+function getModelDisplayName(variantIndex?: number): string {
+  // Use fixed names based on variant index
+  const variantNames = [
+    "GPT 5",           // Variant 1 (index 0)
+    "Claude 4",        // Variant 2 (index 1)
+    "Gemini 2.5 Pro",  // Variant 3 (index 2)
+    "GPT 5 mini",      // Variant 4 (index 3)
+  ];
+  
+  // Return the name based on variant index, fallback to "Unknown" if index is out of bounds
+  if (variantIndex !== undefined && variantIndex < variantNames.length) {
+    return variantNames[variantIndex];
+  }
+  
+  return "Unknown";
+}
+
 function Variants() {
   const { inputMode, head, commits, updateSelectedVariantIndex } =
     useProjectStore();
@@ -114,7 +132,7 @@ function Variants() {
             >
               <div className="flex justify-between items-center">
                 <h3 className="font-medium flex items-center">
-                  Option {index + 1}
+                  {getModelDisplayName(index)}
                   {variant.status === "generating" && (
                     <div className="scale-75 ml-2">
                       <Spinner />

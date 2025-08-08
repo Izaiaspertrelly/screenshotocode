@@ -6,6 +6,7 @@ export type Variant = {
   code: string;
   status?: VariantStatus;
   errorMessage?: string;
+  modelName?: string;
 };
 
 export type BaseCommit = {

@@ -2,7 +2,7 @@ from config import ANTHROPIC_API_KEY, GEMINI_API_KEY, OPENAI_API_KEY
 from llm import Llm, ANTHROPIC_MODELS, GEMINI_MODELS
 from models import (
     stream_claude_response,
-    stream_gemini_response,
+    # stream_gemini_response,
     stream_openai_response,
 )
 from prompts import assemble_prompt
@@ -33,15 +33,16 @@ async def generate_code_core(
             model_name=model.value,
         )
     elif model in GEMINI_MODELS:
-        if not GEMINI_API_KEY:
-            raise Exception("Gemini API key not found")
+        raise Exception("Gemini models are temporarily disabled")
+        # if not GEMINI_API_KEY:
+        #     raise Exception("Gemini API key not found")
 
-        completion = await stream_gemini_response(
-            prompt_messages,
-            api_key=GEMINI_API_KEY,
-            callback=lambda x: process_chunk(x),
-            model_name=model.value,
-        )
+        # completion = await stream_gemini_response(
+        #     prompt_messages,
+        #     api_key=GEMINI_API_KEY,
+        #     callback=lambda x: process_chunk(x),
+        #     model_name=model.value,
+        # )
     else:
         if not OPENAI_API_KEY:
             raise Exception("OpenAI API key not found")

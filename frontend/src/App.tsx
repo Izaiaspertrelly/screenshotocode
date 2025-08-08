@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { generateCode } from "./generateCode";
-import SettingsDialog from "./components/settings/SettingsDialog";
 import { AppState, CodeGenerationParams, EditorTheme, Settings } from "./types";
 import { IS_RUNNING_ON_CLOUD } from "./config";
 import { PicoBadge } from "./components/messages/PicoBadge";
@@ -48,6 +47,7 @@ function App() {
     resetHead,
     updateVariantStatus,
     resizeVariants,
+    updateVariantModels,
 
     // Outputs
     appendExecutionConsole,
@@ -73,7 +73,7 @@ function App() {
       isImageGenerationEnabled: true,
       editorTheme: EditorTheme.COBALT,
       generatedCodeConfig: Stack.HTML_TAILWIND,
-      codeGenerationModel: CodeGenerationModel.CLAUDE_3_5_SONNET_2024_06_20,
+      codeGenerationModel: CodeGenerationModel.GPT_5_2025_08_07,
       // Only relevant for hosted version
       isTermOfServiceAccepted: false,
     },
@@ -86,14 +86,13 @@ function App() {
   const model =
     settings.codeGenerationModel || CodeGenerationModel.GPT_4_VISION;
 
-  const showBetterModelMessage =
-    model !== CodeGenerationModel.GPT_4O_2024_05_13 &&
-    model !== CodeGenerationModel.CLAUDE_3_5_SONNET_2024_06_20 &&
-    appState === AppState.INITIAL;
+  const showBetterModelMessage = false;
 
   const showSelectAndEditFeature =
     (model === CodeGenerationModel.GPT_4O_2024_05_13 ||
-      model === CodeGenerationModel.CLAUDE_3_5_SONNET_2024_06_20) &&
+      model === CodeGenerationModel.CLAUDE_3_5_SONNET_2024_06_20 ||
+      model === CodeGenerationModel.GPT_5_2025_08_07 ||
+      model === CodeGenerationModel.CLAUDE_4_SONNET_2025_05_14) &&
     (settings.generatedCodeConfig === Stack.HTML_TAILWIND ||
       settings.generatedCodeConfig === Stack.HTML_CSS);
 
@@ -192,7 +191,7 @@ function App() {
     // Create variants dynamically - start with 4 to handle most cases
     // Backend will use however many it needs (typically 3)
     const baseCommitObject = {
-      variants: Array(4).fill(null).map(() => ({ code: "" })),
+      variants: Array(4).fill(null).map(() => ({ code: "", modelName: undefined })),
     };
 
     const commitInputObject =
@@ -236,6 +235,10 @@ function App() {
       onVariantCount: (count) => {
         console.log(`Backend is using ${count} variants`);
         resizeVariants(commit.hash, count);
+      },
+      onVariantModels: (models) => {
+        console.log(`Backend is using models:`, models);
+        updateVariantModels(commit.hash, models);
       },
       onCancel: () => {
         cancelCodeGenerationAndReset(commit);
@@ -384,10 +387,9 @@ function App() {
       )}
       <div className="lg:fixed lg:inset-y-0 lg:z-40 lg:flex lg:w-96 lg:flex-col">
         <div className="flex grow flex-col gap-y-2 overflow-y-auto border-r border-gray-200 bg-white px-6 dark:bg-zinc-950 dark:text-white">
-          {/* Header with access to settings */}
+          {/* Header */}
           <div className="flex items-center justify-between mt-10 mb-2">
-            <h1 className="text-2xl ">Screenshot to Code</h1>
-            <SettingsDialog settings={settings} setSettings={setSettings} />
+            <h1 className="text-2xl ">Code Image</h1>
           </div>
 
           {/* Generation settings like stack and model */}

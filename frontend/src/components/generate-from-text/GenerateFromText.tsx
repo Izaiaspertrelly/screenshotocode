@@ -38,7 +38,7 @@ function GenerateFromText({ doCreateFromText }: GenerateFromTextProps) {
       {!isOpen ? (
         <div className="flex justify-center">
           <Button variant="secondary" onClick={() => setIsOpen(true)}>
-            Generate from text prompt [BETA]
+            Gerar a partir de prompt de texto
           </Button>
         </div>
       ) : (
@@ -46,7 +46,7 @@ function GenerateFromText({ doCreateFromText }: GenerateFromTextProps) {
           <Textarea
             ref={textareaRef}
             rows={2}
-            placeholder="A SaaS admin dashboard with charts and user management"
+            placeholder="Um painel administrativo SaaS com gráficos e gerenciamento de usuários"
             className="w-full mb-4"
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -54,13 +54,13 @@ function GenerateFromText({ doCreateFromText }: GenerateFromTextProps) {
           />
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-500">
-              Press Cmd/Ctrl + Enter to generate
+              Pressione Cmd/Ctrl + Enter para gerar
             </span>
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setIsOpen(false)}>
-                Cancel
+                Cancelar
               </Button>
-              <Button onClick={handleGenerate}>Generate</Button>
+              <Button onClick={handleGenerate}>Gerar</Button>
             </div>
           </div>
         </>

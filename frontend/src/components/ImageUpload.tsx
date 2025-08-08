@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
-import { URLS } from "../urls";
 import ScreenRecorder from "./recording/ScreenRecorder";
 import { ScreenRecorderState } from "../types";
 
@@ -165,22 +164,15 @@ function ImageUpload({ setReferenceImages }: Props) {
         <div {...getRootProps({ style: style as any })}>
           <input {...getInputProps()} className="file-input" />
           <p className="text-slate-700 text-lg">
-            Drag & drop a screenshot here, <br />
-            or click to upload
+            Arraste e solte uma captura de tela aqui, <br />
+            ou clique para fazer upload
           </p>
         </div>
       )}
       {screenRecorderState === ScreenRecorderState.INITIAL && (
         <div className="text-center text-sm text-slate-800 mt-4">
-          Upload a screen recording (.mp4, .mov) or record your screen to clone
-          a whole app (experimental).{" "}
-          <a
-            className="underline"
-            href={URLS["intro-to-video"]}
-            target="_blank"
-          >
-            Learn more.
-          </a>
+          Faça upload de uma gravação de tela (.mp4, .mov) ou grave sua tela para clonar
+          um aplicativo inteiro.
         </div>
       )}
       <ScreenRecorder
