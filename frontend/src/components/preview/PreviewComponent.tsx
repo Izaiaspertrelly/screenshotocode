@@ -28,7 +28,7 @@ function PreviewComponent({ code, device, doUpdate }: Props) {
       if (!wrapper || !iframe) return;
 
       const viewportWidth = wrapper.clientWidth;
-      const baseWidth = device === "desktop" ? 1440 : 375;
+      const baseWidth = device === "desktop" ? 405 : 400;
       const scaleValue = Math.min(1, viewportWidth / baseWidth);
 
       setScale(scaleValue);
@@ -74,8 +74,8 @@ function PreviewComponent({ code, device, doUpdate }: Props) {
           className={classNames(
             "border-[4px] border-black rounded-[20px] shadow-lg mx-auto",
             {
-              "w-[1440px] h-[900px]": device === "desktop",
-              "w-[375px] h-[812px]": device === "mobile",
+              "w-[405px] h-[720px]": device === "desktop",
+              "w-[400px] h-[500px]": device === "mobile",
             }
           )}
         ></iframe>

@@ -361,7 +361,7 @@ class ModelSelectionStage:
     ) -> List[Llm]:
         """Simple model cycling that scales with num_variants"""
 
-        claude_model = Llm.CLAUDE_3_7_SONNET_2025_02_19
+        claude_model = Llm.CLAUDE_4_SONNET_2025_05_14
 
         # For text input mode, use Claude 4 Sonnet as third option
         # For other input modes (image/video), use Gemini as third option
@@ -716,7 +716,7 @@ class ParallelGenerationStage:
                     "No OpenAI API key and Replicate key found. Skipping image generation."
                 )
                 return completion
-            image_generation_model = "dalle3"
+            image_generation_model = "gpt-image-1"
             api_key = self.openai_api_key
 
         print("Generating images with model: ", image_generation_model)

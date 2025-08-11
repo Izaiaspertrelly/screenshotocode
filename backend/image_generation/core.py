@@ -11,13 +11,15 @@ async def process_tasks(
     prompts: List[str],
     api_key: str,
     base_url: str | None,
-    model: Literal["dalle3", "flux"],
+    model: Literal["dalle3", "flux", "gpt-image-1"],
 ):
     import time
 
     start_time = time.time()
     if model == "dalle3":
         tasks = [generate_image_dalle(prompt, api_key, base_url) for prompt in prompts]
+    elif model == "gpt-image-1":
+        tasks = [generate_image_gpt_image_1(prompt, api_key, base_url) for prompt in prompts]
     else:
         tasks = [generate_image_replicate(prompt, api_key) for prompt in prompts]
     results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -50,6 +52,35 @@ async def generate_image_dalle(
     )
     await client.close()
     return res.data[0].url
+
+
+async def generate_image_gpt_image_1(
+    prompt: str, api_key: str, base_url: str | None
+) -> Union[str, None]:
+    client = AsyncOpenAI(api_key=api_key, base_url=base_url)
+    
+    try:
+        result = await client.images.generate(
+            model="gpt-image-1",
+            prompt=prompt
+        )
+        
+        # Get the base64 image data
+        image_base64 = result.data[0].b64_json
+        
+        if image_base64:
+            # Return as data URL for compatibility with existing code
+            data_url = f"data:image/png;base64,{image_base64}"
+            return data_url
+        else:
+            print("No image data found in response")
+            return None
+            
+    except Exception as e:
+        print(f"Error generating image with gpt-image-1: {e}")
+        return None
+    finally:
+        await client.close()
 
 
 async def generate_image_replicate(prompt: str, api_key: str) -> str:
@@ -98,7 +129,7 @@ async def generate_images(
     api_key: str,
     base_url: Union[str, None],
     image_cache: Dict[str, str],
-    model: Literal["dalle3", "flux"] = "dalle3",
+    model: Literal["dalle3", "flux", "gpt-image-1"] = "gpt-image-1",
 ) -> str:
     # Find all images
     soup = BeautifulSoup(code, "html.parser")

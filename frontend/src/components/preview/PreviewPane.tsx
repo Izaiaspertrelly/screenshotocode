@@ -62,10 +62,10 @@ function PreviewPane({ doUpdate, reset, settings }: Props) {
           <div className="flex items-center">
             <TabsList>
               <TabsTrigger value="desktop" className="flex gap-x-2">
-                <FaDesktop /> Desktop
+                <FaDesktop /> Stores
               </TabsTrigger>
               <TabsTrigger value="mobile" className="flex gap-x-2">
-                <FaMobile /> Mobile
+                <FaMobile /> Feed
               </TabsTrigger>
               <TabsTrigger value="code" className="flex gap-x-2">
                 <FaCode />

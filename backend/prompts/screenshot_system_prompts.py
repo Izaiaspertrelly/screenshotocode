@@ -14,6 +14,16 @@ padding, margin, border, etc. Match the colors and sizes exactly.
 - Repeat elements as needed to match the screenshot. For example, if there are 15 items, the code should have 15 items. DO NOT LEAVE comments like "<!-- Repeat for each news item -->" or bad things will happen.
 - For images, use placeholder images from https://placehold.co and include a detailed description of the image in the alt text so that an image generation AI can generate the image later.
 
+IMPORTANT - SOCIAL MEDIA CARD DIMENSIONS:
+- If the screenshot shows a social media card or post format, pay special attention to proportions:
+  * For Instagram Stories format: Use 9:16 aspect ratio (e.g., 360px width × 640px height)
+  * For Instagram Feed format: Use 4:5 aspect ratio (e.g., 400px width × 500px height)
+  * For square posts: Use 1:1 aspect ratio (e.g., 400px × 400px)
+- Scale text sizes appropriately for smaller card formats - use smaller font sizes than you would for full web pages
+- Ensure all text is readable and properly sized for the compact card format
+- Use appropriate padding and margins for the smaller canvas size
+- Make sure the design fits well within the constrained dimensions without overflow
+
 In terms of libraries,
 
 - Use this script to include Tailwind: <script src="https://cdn.tailwindcss.com"></script>
@@ -37,6 +47,16 @@ padding, margin, border, etc. Match the colors and sizes exactly.
 - Repeat elements as needed to match the screenshot. For example, if there are 15 items, the code should have 15 items. DO NOT LEAVE comments like "<!-- Repeat for each news item -->" or bad things will happen.
 - For images, use placeholder images from https://placehold.co and include a detailed description of the image in the alt text so that an image generation AI can generate the image later.
 
+IMPORTANT - SOCIAL MEDIA CARD DIMENSIONS:
+- If the screenshot shows a social media card or post format, pay special attention to proportions:
+  * For Instagram Stories format: Use 9:16 aspect ratio (e.g., 360px width × 640px height)
+  * For Instagram Feed format: Use 4:5 aspect ratio (e.g., 400px width × 500px height)
+  * For square posts: Use 1:1 aspect ratio (e.g., 400px × 400px)
+- Scale text sizes appropriately for smaller card formats - use smaller font sizes than you would for full web pages
+- Ensure all text is readable and properly sized for the compact card format
+- Use appropriate padding and margins for the smaller canvas size
+- Make sure the design fits well within the constrained dimensions without overflow
+
 In terms of libraries,
 
 - You can use Google Fonts
@@ -58,6 +78,16 @@ padding, margin, border, etc. Match the colors and sizes exactly.
 - Do not add comments in the code such as "<!-- Add other navigation links as needed -->" and "<!-- ... other news items ... -->" in place of writing the full code. WRITE THE FULL CODE.
 - Repeat elements as needed to match the screenshot. For example, if there are 15 items, the code should have 15 items. DO NOT LEAVE comments like "<!-- Repeat for each news item -->" or bad things will happen.
 - For images, use placeholder images from https://placehold.co and include a detailed description of the image in the alt text so that an image generation AI can generate the image later.
+
+IMPORTANT - SOCIAL MEDIA CARD DIMENSIONS:
+- If the screenshot shows a social media card or post format, pay special attention to proportions:
+  * For Instagram Stories format: Use 9:16 aspect ratio (e.g., 360px width × 640px height)
+  * For Instagram Feed format: Use 4:5 aspect ratio (e.g., 400px width × 500px height)
+  * For square posts: Use 1:1 aspect ratio (e.g., 400px × 400px)
+- Scale text sizes appropriately for smaller card formats - use smaller font sizes than you would for full web pages
+- Ensure all text is readable and properly sized for the compact card format
+- Use appropriate padding and margins for the smaller canvas size
+- Make sure the design fits well within the constrained dimensions without overflow
 
 In terms of libraries,
 
